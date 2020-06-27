@@ -6,33 +6,43 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 //在application.properties中进行配置，将覆盖下方的默认值
 @ConfigurationProperties(prefix = "rpc.service")
 public class ServiceProperties {
-	private String type = TransportTypeEnum.NETTY.getCode();
+	private String transportType = TransportTypeEnum.NETTY.getCode();
 
-	private String ip = "127.0.0.1";
+	private String transportIp = "127.0.0.1";
 
-	private int port = 4399;
+	private int transportPort = 4399;
 
-	public String getType() {
-		return type;
+	private String zookeeperUrl = "127.0.0.1:2181";
+
+	public String getTransportType() {
+		return transportType;
 	}
 
-	public void setType(String type) {
-		this.type = type;
+	public void setTransportType(String transportType) {
+		this.transportType = transportType;
 	}
 
-	public String getIp() {
-		return ip;
+	public String getTransportIp() {
+		return transportIp;
 	}
 
-	public void setIp(String ip) {
-		this.ip = ip;
+	public void setTransportIp(String transportIp) {
+		this.transportIp = transportIp;
 	}
 
-	public int getPort() {
-		return port;
+	public int getTransportPort() {
+		return transportPort;
 	}
 
-	public void setPort(int port) {
-		this.port = port;
+	public void setTransportPort(int transportPort) {
+		this.transportPort = transportPort;
+	}
+
+	public String getZookeeperUrl() {
+		return zookeeperUrl;
+	}
+
+	public void setZookeeperUrl(String zookeeperUrl) {
+		this.zookeeperUrl = zookeeperUrl;
 	}
 }

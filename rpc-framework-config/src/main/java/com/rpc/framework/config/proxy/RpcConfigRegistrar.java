@@ -40,7 +40,7 @@ public class RpcConfigRegistrar implements ImportBeanDefinitionRegistrar, Resour
 
 		Class<? extends BeanNameGenerator> generatorClass = annoAttrs.getClass("nameGenerator");
 		if (!BeanNameGenerator.class.equals(generatorClass)) {
-			scanner.setBeanNameGenerator((BeanNameGenerator) BeanUtils.instantiateClass(generatorClass));
+			scanner.setBeanNameGenerator(BeanUtils.instantiateClass(generatorClass));
 		}
 		scanner.setResourceLoader(resourceLoader);
 		scanner.addIncludeFilter(new AnnotationTypeFilter(Service.class));
