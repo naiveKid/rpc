@@ -22,7 +22,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public final class CuratorUtils {
 	private static final int BASE_SLEEP_TIME = 1000;
 	private static final int MAX_RETRIES = 3;
-	private static String CONNECT_STRING = "127.0.0.1:2181";
+	private static String CONNECT_STRING;
 	public static final String ZK_REGISTER_ROOT_PATH = "/my-rpc";
 	private static Map<String, List<String>> serviceAddressMap = new ConcurrentHashMap<>();
 	private static Set<String> registeredPathSet = ConcurrentHashMap.newKeySet();

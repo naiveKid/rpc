@@ -1,5 +1,6 @@
 package com.rpc.framework;
 
+import com.rpc.framework.config.proxy.EnableRpc;
 import com.rpc.framework.proxy.RpcClientProxy;
 import com.rpc.framework.req.Hello;
 import lombok.extern.slf4j.Slf4j;
@@ -11,6 +12,7 @@ import org.springframework.context.ConfigurableApplicationContext;
  * @author hxz
  */
 @Slf4j
+@EnableRpc
 @SpringBootApplication
 public class ClientApplication {
 	public static void main(String[] args) {

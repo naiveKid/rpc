@@ -25,7 +25,7 @@ import javax.annotation.PostConstruct;
 //读取默认配置
 @EnableConfigurationProperties({ServiceProperties.class, ClientProperties.class})
 public class InitAutoConfiguration {
-	@Value("${rpc.zookeeper.url}")
+	@Value("${rpc.zookeeper.url:127.0.0.1:2181}")
 	private String zookeeperUrl;
 
 	private ServiceProperties serviceProperties;
