@@ -10,9 +10,9 @@ import java.util.Set;
 /**
  * @author hxz
  */
-public class ReferenceBeanDefinitionScanner extends ClassPathBeanDefinitionScanner {
+public class ServiceBeanDefinitionScanner extends ClassPathBeanDefinitionScanner {
 
-	public ReferenceBeanDefinitionScanner(BeanDefinitionRegistry registry, boolean useDefaultFilters) {
+	public ServiceBeanDefinitionScanner(BeanDefinitionRegistry registry, boolean useDefaultFilters) {
 		super(registry, useDefaultFilters);
 	}
 

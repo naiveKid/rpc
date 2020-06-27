@@ -1,6 +1,6 @@
 package com.rpc.framework;
 
-import com.rpc.framework.config.proxy.EnableRpc;
+import com.rpc.framework.config.proxy.EnableRpcScan;
 import com.rpc.framework.remoting.transport.TransportServer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
@@ -11,7 +11,7 @@ import org.springframework.context.ConfigurableApplicationContext;
  * @author hxz
  */
 @Slf4j
-@EnableRpc
+@EnableRpcScan(value = "com.rpc")
 @SpringBootApplication
 public class ServerApplication {
 	public static void main(String[] args) {

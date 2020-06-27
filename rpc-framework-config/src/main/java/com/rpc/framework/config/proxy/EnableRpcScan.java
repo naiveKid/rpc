@@ -1,5 +1,6 @@
 package com.rpc.framework.config.proxy;
 
+import org.springframework.beans.factory.support.BeanNameGenerator;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
@@ -16,5 +17,12 @@ import java.lang.annotation.*;
 @Documented
 @Configuration
 @Import(RpcConfigRegistrar.class)
-public @interface EnableRpc {
+public @interface EnableRpcScan {
+	String[] value() default {};
+
+	String[] basePackages() default {};
+
+	Class<?>[] basePackageClasses() default {};
+
+	Class<? extends BeanNameGenerator> nameGenerator() default BeanNameGenerator.class;
 }
