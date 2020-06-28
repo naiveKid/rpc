@@ -25,7 +25,10 @@ import io.netty.handler.timeout.IdleStateHandler;
 import lombok.extern.slf4j.Slf4j;
 
 import java.net.InetSocketAddress;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * 服务端。接收客户端消息，并且根据客户端的消息调用相应的方法，然后返回结果给客户端。
@@ -39,6 +42,7 @@ public class NettyServiceProxy implements TransportServiceProxy {
 	private KryoSerializer kryoSerializer;
 	private ServiceRegistry serviceRegistry;
 	private ServiceProvider serviceProvider;
+	private AtomicInteger publishNum = new AtomicInteger(0);
 
 	public NettyServiceProxy(String host, int port) {
 		this.host = host;
@@ -50,9 +54,16 @@ public class NettyServiceProxy implements TransportServiceProxy {
 
 	@Override
 	public <T> void publishService(T service, Class<T> serviceClass) {
+		log.info("发布:{}", service.getClass());
 		serviceProvider.addServiceProvider(service, serviceClass);
 		serviceRegistry.registerService(serviceClass.getCanonicalName(), new InetSocketAddress(host, port));
-		start();
+		if (publishNum.incrementAndGet() == 1) {
+			log.info("启动netty....");
+			ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(1, 1,
+					0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<Runnable>(1),
+					r -> new Thread(r, "t_pool_" + r.hashCode()));
+			threadPoolExecutor.execute(this::start);
+		}
 	}
 
 	private void start() {

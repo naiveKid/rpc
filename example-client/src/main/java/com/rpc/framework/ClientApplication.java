@@ -22,5 +22,9 @@ public class ClientApplication {
 		HelloService helloService = rpcClientProxy.getProxy(HelloService.class);
 		String hello = helloService.hello(new Hello("111", "222"));
 		log.info("远程调用结果:{}",hello);
+
+		HelloService1 helloService1 = rpcClientProxy.getProxy(HelloService1.class);
+		String hello1 = helloService1.hello(new Hello("1111", "2222"));
+		log.info("远程调用结果:{}", hello1);
 	}
 }
