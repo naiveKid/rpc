@@ -2,14 +2,15 @@ package com.rpc.framework.config.transport;
 
 import com.rpc.framework.config.transport.client.ClientProperties;
 import com.rpc.framework.config.transport.service.ServiceProperties;
+import com.rpc.framework.enumeration.BeanNameConstant;
 import com.rpc.framework.enumeration.TransportTypeEnum;
 import com.rpc.framework.proxy.RpcClientProxy;
 import com.rpc.framework.remoting.transport.ClientTransport;
-import com.rpc.framework.remoting.transport.TransportServer;
+import com.rpc.framework.remoting.transport.TransportServiceProxy;
 import com.rpc.framework.remoting.transport.netty.client.NettyClientTransport;
-import com.rpc.framework.remoting.transport.netty.server.NettyServer;
+import com.rpc.framework.remoting.transport.netty.server.NettyServiceProxy;
 import com.rpc.framework.remoting.transport.socket.SocketRpcClient;
-import com.rpc.framework.remoting.transport.socket.SocketRpcServer;
+import com.rpc.framework.remoting.transport.socket.SocketRpcServiceProxy;
 import com.rpc.framework.utils.zk.CuratorUtils;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -30,20 +31,20 @@ public class InitAutoConfiguration {
 		this.clientProperties = clientProperties;
 	}
 
-	@Bean
+	@Bean(value = BeanNameConstant.TransportServiceProxy)
 	//当不存在创建好的实例，将使用该方法进行创建
-	@ConditionalOnMissingBean(TransportServer.class)
-	public TransportServer transportServer(ServiceProperties serviceProperties) {
+	@ConditionalOnMissingBean(TransportServiceProxy.class)
+	public TransportServiceProxy transportServiceProxy(ServiceProperties serviceProperties) {
 		CuratorUtils.setConnectString(serviceProperties.getZookeeperUrl());
 		if (TransportTypeEnum.NETTY.getCode().equals(serviceProperties.getTransportType().toLowerCase())) {
-			return new NettyServer(serviceProperties.getTransportIp(), serviceProperties.getTransportPort());
+			return new NettyServiceProxy(serviceProperties.getTransportIp(), serviceProperties.getTransportPort());
 		} else if (TransportTypeEnum.SOCKET.getCode().equals(serviceProperties.getTransportType().toLowerCase())) {
-			return new SocketRpcServer(serviceProperties.getTransportIp(), serviceProperties.getTransportPort());
+			return new SocketRpcServiceProxy(serviceProperties.getTransportIp(), serviceProperties.getTransportPort());
 		}
-		return new NettyServer(serviceProperties.getTransportIp(), serviceProperties.getTransportPort());
+		return new NettyServiceProxy(serviceProperties.getTransportIp(), serviceProperties.getTransportPort());
 	}
 
-	@Bean
+	@Bean(value = BeanNameConstant.RpcClientProxy)
 	//当不存在创建好的实例，将使用该方法进行创建
 	@ConditionalOnMissingBean(RpcClientProxy.class)
 	public RpcClientProxy rpcClientProxy(ClientProperties clientProperties) {
