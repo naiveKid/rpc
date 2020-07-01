@@ -1,7 +1,6 @@
 package com.rpc.framework.config.proxy.consumer;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import java.lang.annotation.*;
 
@@ -15,7 +14,6 @@ import java.lang.annotation.*;
 //该注解将被包含在javadoc中
 @Documented
 @Inherited
-@Component
 @Autowired
 public @interface Reference {
 }

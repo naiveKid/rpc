@@ -6,6 +6,7 @@ import com.rpc.framework.remoting.transport.TransportServiceProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.ApplicationContext;
+import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
@@ -13,7 +14,7 @@ import org.springframework.stereotype.Component;
  * @author hxz
  */
 @Component
-@Order(value = 1)
+@Order(Ordered.LOWEST_PRECEDENCE)
 public class PublishServiceRunner implements CommandLineRunner {
 	@Autowired
 	private ApplicationContext applicationContext;
