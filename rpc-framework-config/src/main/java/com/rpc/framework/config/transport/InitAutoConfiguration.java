@@ -25,6 +25,10 @@ public class InitAutoConfiguration {
 	private ServiceProperties serviceProperties;
 	private ClientProperties clientProperties;
 
+	public InitAutoConfiguration() {
+
+	}
+
 	//在application.properties中进行配置，将使用其创建好的配置
 	public InitAutoConfiguration(ServiceProperties serviceProperties,ClientProperties clientProperties){
 		this.serviceProperties = serviceProperties;
@@ -34,7 +38,7 @@ public class InitAutoConfiguration {
 	@Bean(value = BeanNameConstant.TransportServiceProxy)
 	//当不存在创建好的实例，将使用该方法进行创建
 	@ConditionalOnMissingBean(TransportServiceProxy.class)
-	public TransportServiceProxy transportServiceProxy(ServiceProperties serviceProperties) {
+	public static TransportServiceProxy transportServiceProxy(ServiceProperties serviceProperties) {
 		CuratorUtils.setConnectString(serviceProperties.getZookeeperUrl());
 		if (TransportTypeEnum.NETTY.getCode().equals(serviceProperties.getTransportType().toLowerCase())) {
 			return new NettyServiceProxy(serviceProperties.getTransportIp(), serviceProperties.getTransportPort());
@@ -47,7 +51,7 @@ public class InitAutoConfiguration {
 	@Bean(value = BeanNameConstant.RpcClientProxy)
 	//当不存在创建好的实例，将使用该方法进行创建
 	@ConditionalOnMissingBean(RpcClientProxy.class)
-	public RpcClientProxy rpcClientProxy(ClientProperties clientProperties) {
+	public static RpcClientProxy rpcClientProxy(ClientProperties clientProperties) {
 		ClientTransport clientTransport=null;
 		if (TransportTypeEnum.NETTY.getCode().equals(clientProperties.getTransportType().toLowerCase())) {
 			 clientTransport = new NettyClientTransport();

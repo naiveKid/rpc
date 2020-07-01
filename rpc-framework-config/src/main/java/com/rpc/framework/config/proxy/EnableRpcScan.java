@@ -16,7 +16,7 @@ import java.lang.annotation.*;
 //该注解将被包含在javadoc中
 @Documented
 @Configuration
-@Import(RpcConfigRegistrar.class)
+@Import({RpcServiceConfigRegistrar.class, RpcReferenceConfigRegistrar.class})
 public @interface EnableRpcScan {
 	String[] value() default {};
 
