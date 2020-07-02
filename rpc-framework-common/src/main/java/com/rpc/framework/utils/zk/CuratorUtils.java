@@ -57,17 +57,17 @@ public final class CuratorUtils {
 	}
 
 	/**
-	 * 创建持久化节点。不同于临时节点，持久化节点不会因为客户端断开连接而被删除
+	 * 创建临时节点. 若为持久化节点,则不会因为客户端断开连接而被删除
 	 *
 	 * @param path 节点路径
 	 */
-	public static void createPersistentNode(String path) {
+	public static void createEphemeralNode(String path) {
 		try {
 			if (registeredPathSet.contains(path) || getInstance().checkExists().forPath(path) != null) {
 				log.info("节点已经存在，节点为:[{}]", path);
 			} else {
 				//eg: /my-rpc/github.javaguide.HelloService/127.0.0.1:9999
-				getInstance().create().creatingParentsIfNeeded().withMode(CreateMode.PERSISTENT).forPath(path);
+				getInstance().create().creatingParentsIfNeeded().withMode(CreateMode.EPHEMERAL).forPath(path);
 				log.info("节点创建成功，节点为:[{}]", path);
 			}
 			registeredPathSet.add(path);

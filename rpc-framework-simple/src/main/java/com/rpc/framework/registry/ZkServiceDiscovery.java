@@ -1,8 +1,11 @@
 package com.rpc.framework.registry;
 
+import com.rpc.framework.enumeration.RpcErrorMessageEnum;
+import com.rpc.framework.exception.RpcException;
 import com.rpc.framework.loadbalance.LoadBalance;
 import com.rpc.framework.loadbalance.RandomLoadBalance;
 import com.rpc.framework.utils.zk.CuratorUtils;
+import io.netty.util.internal.StringUtil;
 import lombok.extern.slf4j.Slf4j;
 
 import java.net.InetSocketAddress;
@@ -27,6 +30,9 @@ public class ZkServiceDiscovery implements ServiceDiscovery {
         List<String> serviceUrlList = CuratorUtils.getChildrenNodes(serviceName);
         // 负载均衡
         String targetServiceUrl = loadBalance.selectServiceAddress(serviceUrlList);
+        if (StringUtil.isNullOrEmpty(targetServiceUrl)) {
+            throw new RpcException(RpcErrorMessageEnum.SERVICE_CAN_NOT_BE_FOUND);
+        }
         log.info("成功找到服务地址:[{}]", targetServiceUrl);
         String[] socketAddressArray = targetServiceUrl.split(":");
         String host = socketAddressArray[0];

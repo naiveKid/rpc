@@ -19,9 +19,7 @@ public class CustomShutdownHook {
 
     public void clearAll() {
         log.info("addShutdownHook for clearAll");
-        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            CuratorUtils.clearRegistry();
-            ThreadPoolFactoryUtils.shutDownAllThreadPool();
-        }));
+        CuratorUtils.clearRegistry();
+        ThreadPoolFactoryUtils.shutDownAllThreadPool();
     }
 }

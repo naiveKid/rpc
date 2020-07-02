@@ -1,6 +1,5 @@
 package com.rpc.framework.remoting.transport.socket;
 
-import com.rpc.framework.config.CustomShutdownHook;
 import com.rpc.framework.provider.ServiceProvider;
 import com.rpc.framework.provider.ServiceProviderImpl;
 import com.rpc.framework.registry.ServiceRegistry;
@@ -46,7 +45,6 @@ public class SocketRpcServiceProxy implements TransportServiceProxy {
 	private void start() {
 		try (ServerSocket server = new ServerSocket()) {
 			server.bind(new InetSocketAddress(host, port));
-			CustomShutdownHook.getCustomShutdownHook().clearAll();
 			Socket socket;
 			while ((socket = server.accept()) != null) {
 				log.info("client connected [{}]", socket.getInetAddress());

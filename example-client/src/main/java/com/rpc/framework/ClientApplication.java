@@ -4,7 +4,6 @@ import com.rpc.framework.config.proxy.EnableRpcScan;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.ConfigurableApplicationContext;
 
 /**
  * @author hxz
@@ -14,8 +13,6 @@ import org.springframework.context.ConfigurableApplicationContext;
 @SpringBootApplication
 public class ClientApplication {
 	public static void main(String[] args) {
-		ConfigurableApplicationContext cxt = SpringApplication.run(ClientApplication.class, args);
-		TestConfig testConfig = (TestConfig) cxt.getBean("testConfig");
-		testConfig.test();
+		SpringApplication.run(ClientApplication.class, args);
 	}
 }

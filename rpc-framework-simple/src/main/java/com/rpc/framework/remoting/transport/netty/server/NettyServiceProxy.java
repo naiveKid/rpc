@@ -1,6 +1,5 @@
 package com.rpc.framework.remoting.transport.netty.server;
 
-import com.rpc.framework.config.CustomShutdownHook;
 import com.rpc.framework.provider.ServiceProvider;
 import com.rpc.framework.provider.ServiceProviderImpl;
 import com.rpc.framework.registry.ServiceRegistry;
@@ -67,7 +66,6 @@ public class NettyServiceProxy implements TransportServiceProxy {
 	}
 
 	private void start() {
-		CustomShutdownHook.getCustomShutdownHook().clearAll();
 		EventLoopGroup bossGroup = new NioEventLoopGroup();
 		EventLoopGroup workerGroup = new NioEventLoopGroup();
 		try {

@@ -17,6 +17,6 @@ public class ZkServiceRegistry implements ServiceRegistry {
     public void registerService(String serviceName, InetSocketAddress inetSocketAddress) {
         //根节点下注册子节点：服务
         String servicePath = CuratorUtils.ZK_REGISTER_ROOT_PATH + "/" + serviceName + inetSocketAddress.toString();
-        CuratorUtils.createPersistentNode(servicePath);
+        CuratorUtils.createEphemeralNode(servicePath);
     }
 }
