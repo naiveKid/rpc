@@ -11,6 +11,7 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 //该注解将被包含在javadoc中
 @Documented
+//添加@Component,则无需添加 @Import({RpcServiceConfigRegistrar.class}) 自动扫描,即可注入容器
 @Inherited
 public @interface Service {
 }
